@@ -2,11 +2,11 @@
   <div class="container">
     <el-card>
       <img src="../../assets/logo_index.png" alt />
-      <el-form :model="LoginForm">
-        <el-form-item>
-          <el-input v-model="LoginForm.mobeil" placeholder="请输入电话号码"></el-input>
+      <el-form ref="loginForm" status-icon :model="LoginForm" :rules="LoginRules">
+        <el-form-item prop="mobile">
+          <el-input v-model="LoginForm.mobile" placeholder="请输入电话号码"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="code">
           <el-input
             v-model="LoginForm.code"
             placeholder="请输入验证码"
@@ -18,7 +18,7 @@
           <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" style="width:100%">登录</el-button>
+          <el-button type="primary" @click="Login" style="width:100%">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -28,8 +28,42 @@
 <script>
 export default {
   data () {
+    var validatePass = (rule, value, callback) => {
+      if (/^1[3-9]\d{9}$/.test(value)) {
+        callback()
+      } else {
+        callback(new Error('手机号码格式不正确'))
+      }
+    }
     return {
-      LoginForm: { mobeil: '', code: '' }
+      LoginForm: { mobile: '', code: '' },
+      LoginRules: {
+        mobile: [
+          { required: true, message: '请输入电话号码', trigger: 'blur' },
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { len: 6, message: '验证码为六位', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    Login () {
+      this.$refs['loginForm'].validate(valid => {
+        if (valid) {
+          // console.log('ok')
+          this.$http
+            .post('authorizations', this.LoginForm)
+            .then(() => {
+              this.$router.push('/')
+            })
+            .catch(() => {
+              this.$message.error('用户名或密码错误')
+            })
+        }
+      })
     }
   }
 }
