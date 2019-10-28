@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="container">
     <el-card>
       <img src="../../assets/logo_index.png" alt />
       <el-form ref="loginForm" status-icon :model="LoginForm" :rules="LoginRules">
@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style lang="less">
-.container {
+#container {
   width: 100%;
   height: 100%;
   //   background: pink;
