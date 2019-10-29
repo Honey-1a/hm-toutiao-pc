@@ -26,6 +26,9 @@
 </template>
 
 <script>
+// 引入本次存储模块
+import local from '@/utils/local'
+
 export default {
   data () {
     var validatePass = (rule, value, callback) => {
@@ -36,7 +39,7 @@ export default {
       }
     }
     return {
-      LoginForm: { mobile: '', code: '' },
+      LoginForm: { mobile: '13900000000', code: '246810' },
       LoginRules: {
         mobile: [
           { required: true, message: '请输入电话号码', trigger: 'blur' },
@@ -56,7 +59,9 @@ export default {
           // console.log('ok')
           this.$http
             .post('authorizations', this.LoginForm)
-            .then(() => {
+            .then(res => {
+              // 保存用户信息
+              local.setUser(res.data.data)
               this.$router.push('/')
             })
             .catch(() => {
