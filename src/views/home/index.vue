@@ -51,17 +51,19 @@
         <!-- 下拉菜单 -->
         <el-dropdown>
           <span class="el-dropdown-link">
-            <img src="../../assets/avatar.jpg" alt class="headIcon" />
-            <span class="userName">用户名</span>
+            <img :src="photo" alt class="headIcon" />
+            <span class="userName">{{name}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+              <!-- native 同once prevent stop 一样同为修饰符-->
+            <el-dropdown-item icon="el-icon-setting" @click.native="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
       <el-main>
+        <!--二级路由容器-->
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -69,16 +71,38 @@
 </template>
 
 <script>
+// 导入用户信息模块
+import local from '@/utils/local.js'
+
 export default {
   data () {
     return {
-      isOpen: true
+      // 是你是展开的
+      isOpen: true,
+      // 用户名称
+      name: '',
+      // 头像
+      photo: ''
     }
   },
   methods: {
     toggleMenu () {
+      // 切换侧边栏的展开和关闭
       this.isOpen = !this.isOpen
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    logout () {
+      local.delUser()
+      this.$router.push('/login')
     }
+  },
+  created () {
+    // 保存用户信息
+    const user = local.getUser() || {}
+    this.name = user.name
+    this.photo = user.photo
   }
 }
 </script>

@@ -54,19 +54,31 @@ export default {
   },
   methods: {
     Login () {
-      this.$refs['loginForm'].validate(valid => {
+      this.$refs['loginForm'].validate(async valid => {
         if (valid) {
           // console.log('ok')
-          this.$http
-            .post('authorizations', this.LoginForm)
-            .then(res => {
-              // 保存用户信息
-              local.setUser(res.data.data)
-              this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message.error('用户名或密码错误')
-            })
+          // this.$http
+          //   .post('authorizations', this.LoginForm)
+          //   .then(res => {
+          //     // 保存用户信息
+          //     local.setUser(res.data.data)
+          //     this.$router.push('/')
+          //   })
+          //   .catch(() => {
+          //     this.$message.error('用户名或密码错误')
+          //   })
+
+          // 用async和await改造登录请求
+          // 接受调取接口后拿到的data数据
+          // await获取的是成功后的数据，如有失败需要用try{可能发生错误的代码}catch(e){处理错误}捕获
+          try {
+            const { data: { data } } = await this.$http.post('authorizations', this.LoginForm)
+            // 保存用户信息
+            local.setUser(data)
+            this.$router.push('/')
+          } catch (e) {
+            this.$message.error('用户名或密码错误')
+          }
         }
       })
     }
