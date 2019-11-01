@@ -56,9 +56,11 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-              <!-- native 同once prevent stop 一样同为修饰符-->
+            <!-- native 同once prevent stop 一样同为修饰符-->
             <el-dropdown-item icon="el-icon-setting" @click.native="setting">个人设置</el-dropdown-item>
             <el-dropdown-item icon="el-icon-unlock" @click.native="logout">退出登录</el-dropdown-item>
+            <!-- <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="logout">退出登录</el-dropdown-item> -->
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -97,6 +99,13 @@ export default {
       local.delUser()
       this.$router.push('/login')
     }
+    // handleClick (command) {
+    //   // command  值  setting | logout
+    //   // 根据 command 值去执行不同的业务
+    //   this[command]()
+    //   // this.setting() === command setting
+    //   // this.logout() === command logout
+    // }
   },
   created () {
     // 保存用户信息

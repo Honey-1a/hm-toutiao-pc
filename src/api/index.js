@@ -2,12 +2,25 @@
 import axios from 'axios'
 import local from '@/utils/local'
 import router from '@/router'
+import JSONBIG from 'json-bigint'
 
 // 配置axios
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 // if (local.getUser()) {
 //   axios.defaults.headers.Authorization = `Bearer ${local.getUser().token}`
 // }
+
+// 解决js的最大安全数值问题
+axios.defaults.transformResponse = [ (data) => {
+  // 对 data 进行任意转换处理
+  // 理想情况转换,不理想情况下显示原数据
+  // 如后台可能没有任何的响应内容 让data的内容为null
+  try {
+    return JSONBIG.parse(data)
+  } catch (e) {
+    return data
+  }
+}]
 
 // 添加请求拦截器，在每一次发请求之前，获取本地的token
 
