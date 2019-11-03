@@ -104,7 +104,7 @@ export default {
         // 当前页
         page: 1,
         // 每页显示多少条
-        per_page: 20
+        per_page: 10
       },
 
       dataArr: [],
@@ -113,18 +113,11 @@ export default {
     }
   },
   created () {
-    // 获取频道信息
-    // this.getChannelOptions()
+    // 获取文章列表信息
     this.getArticleList()
   },
   methods: {
-    // 频道渲染，获取频道信息
-    // async getChannelOptions () {
-    //   const {
-    //     data: { data }
-    //   } = await this.$http.get('channels')
-    //   this.channelOptions = data.channels
-    // },
+
     // 获取文章列表数据
     async getArticleList () {
       // 获取列表数据
@@ -170,5 +163,5 @@ export default {
 }
 </script>
 
- <style lang="less">
+ <style scoped lang="less">
 </style>

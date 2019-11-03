@@ -7,6 +7,7 @@ import welcome from '@/views/welcome'
 import NotFound from '@/views/404'
 import local from '@/utils/local.js'
 import article from '@/views/article'
+import image from '@/views/image'
 Vue.use(VueRouter)
 
 // 通过本地是否存储信息判断用户是否登录
@@ -31,6 +32,10 @@ const router = new VueRouter({
     {
       path: '/article',
       component: article
+    },
+    {
+      path: '/image',
+      component: image
     },
     {
       path: '*',
