@@ -151,7 +151,7 @@ export default {
       }
     },
     toEdit (id) {
-      this.$router.push('/publish', { query: id })
+      this.$router.push({ path: '/publish', query: { id } })
     },
     async delArticle (id) {
       await this.$http.delete(`articles/${id}`)

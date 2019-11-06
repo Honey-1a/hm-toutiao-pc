@@ -8,6 +8,8 @@ import NotFound from '@/views/404'
 import local from '@/utils/local.js'
 import article from '@/views/article'
 import image from '@/views/image'
+import publish from '@/views/publish'
+import comment from '@/views/comment'
 Vue.use(VueRouter)
 
 // 通过本地是否存储信息判断用户是否登录
@@ -36,6 +38,14 @@ const router = new VueRouter({
     {
       path: '/image',
       component: image
+    },
+    {
+      path: '/publish',
+      component: publish
+    },
+    {
+      path: '/comment',
+      component: comment
     },
     {
       path: '*',
