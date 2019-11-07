@@ -10,6 +10,8 @@ import article from '@/views/article'
 import image from '@/views/image'
 import publish from '@/views/publish'
 import comment from '@/views/comment'
+import setting from '@/views/setting'
+import fans from '@/views/fans'
 Vue.use(VueRouter)
 
 // 通过本地是否存储信息判断用户是否登录
@@ -46,6 +48,14 @@ const router = new VueRouter({
     {
       path: '/comment',
       component: comment
+    },
+    {
+      path: '/setting',
+      component: setting
+    },
+    {
+      path: '/fans',
+      component: fans
     },
     {
       path: '*',

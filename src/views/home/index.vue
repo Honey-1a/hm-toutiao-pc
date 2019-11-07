@@ -75,7 +75,8 @@
 <script>
 // 导入用户信息模块
 import local from '@/utils/local.js'
-
+// 引入事件总线
+import eventBus from '@/eventBus.js'
 export default {
   data () {
     return {
@@ -112,6 +113,15 @@ export default {
     const user = local.getUser() || {}
     this.name = user.name
     this.photo = user.photo
+
+    // 更新用户名 ，谁接受数据谁绑定事件
+    eventBus.$on('updateUser', (name) => {
+      this.name = name
+    })
+    // 更新图片
+    eventBus.$on('updatePhoto', (photo) => {
+      this.photo = photo
+    })
   }
 }
 </script>
